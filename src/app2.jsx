@@ -1,4 +1,5 @@
-
+import Usuarios from "./components/Usuarios";
+import "./css/App.css";
 
 const App2 = () =>{ 
 
@@ -6,7 +7,7 @@ const App2 = () =>{
 
      return (
         <div>
-        <h1>Luciano Martín Riveros</h1>
+        <h1>Grupo 15</h1>
         <Usuarios />
         </div>
      )    
