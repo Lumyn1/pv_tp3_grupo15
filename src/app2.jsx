@@ -1,14 +1,14 @@
-import Usuarios from "./components/Usuarios";
+import Proyectos from "./components/Proyectos";
 import "./css/App.css";
 
-const App2 = () =>{ 
+const App2 = () => { 
 
      console.log ("hola mundo");
 
      return (
         <div>
         <h1>Grupo 15</h1>
-        <Usuarios />
+        <Proyectos />
         </div>
      )    
 
