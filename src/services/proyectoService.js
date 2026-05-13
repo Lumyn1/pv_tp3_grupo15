@@ -10,7 +10,7 @@ const proyectoService = (() => {
     ];
 
     // Obtener copia del arreglo
-    const listarProyecto = () => {
+    const listarProyectos = () => {
         return [...proyecto];
     };
 
@@ -51,7 +51,7 @@ const proyectoService = (() => {
     };
 
     return {
-        listarProyecto,
+        listarProyectos,
         buscarProyecto,
         agregarProyecto,
         eliminarProyecto
