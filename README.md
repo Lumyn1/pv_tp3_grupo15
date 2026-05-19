@@ -1,6 +1,6 @@
 .Riveros Luciano Martín - id de github: Lumyn1
 .Torres Nahuel Tobias - id de GitHub: Torres Nahuel Tobias
-
+.Cancino Arturo Luis Eduardo - id de GitHub: EducanXD
 
 # React + Vite
 
