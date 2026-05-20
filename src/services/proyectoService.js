@@ -1,62 +1,65 @@
 const proyectoService = (() => {
+  // Arreglo privado de proyectos
+  const proyecto = [
+    { id: 1, titulo: "Sistema de Gestión", categoria: "Web", estado: true },
+    { id: 2, titulo: "App Móvil Delivery", categoria: "Mobile", estado: false },
+    { id: 3, titulo: "E-commerce Ropa", categoria: "Web", estado: true },
+    {
+      id: 4,
+      titulo: "Análisis de Datos",
+      categoria: "Data Science",
+      estado: true,
+    },
+    {
+      id: 5,
+      titulo: "Bot de Discord",
+      categoria: "Herramientas",
+      estado: true,
+    },
+  ];
 
-    // Arreglo privado de proyectos
-    const proyecto = [
-        { id: 1, titulo: "Sistema de Gestión", categoria: "Web", estado: true },
-        { id: 2, titulo: "App Móvil Delivery", categoria: "Mobile", estado: false },
-        { id: 3, titulo: "E-commerce Ropa", categoria: "Web", estado: true },
-        { id: 4, titulo: "Análisis de Datos", categoria: "Data Science", estado: true },
-        { id: 5, titulo: "Bot de Discord", categoria: "Herramientas", estado: true }
-    ];
+  // Obtener copia del arreglo
+  const listarProyectos = () => {
+    return [...proyecto];
+  };
 
-    // Obtener copia del arreglo
-    const listarProyectos = () => {
-        return [...proyecto];
-    };
+  // Agregar proyecto
+  const agregarProyecto = (nuevoProyecto) => {
+    const copia = [...proyecto];
 
-    // Agregar proyecto
-    const agregarProyecto = (nuevoProyecto) => {
+    copia.push(nuevoProyecto);
 
-        const copia = [...proyecto];
+    proyecto.length = 0;
 
-        copia.push(nuevoProyecto);
+    proyecto.push(...copia);
+  };
 
-        proyecto.length = 0;
+  // Buscar proyecto
+  const buscarProyecto = (texto) => {
+    const copia = [...proyecto];
 
-        proyecto.push(...copia);
-    };
+    return copia.filter((proyecto) =>
+      proyecto.titulo.toLowerCase().includes(texto.toLowerCase()),
+    );
+  };
 
-    // Buscar proyecto
-    const buscarProyecto = (texto) => {
+  // Eliminar proyecto
+  const eliminarProyecto = (id) => {
+    const copia = [...proyecto];
 
-        const copia = [...proyecto];
+    const nuevaLista = copia.filter((proyecto) => proyecto.id !== id);
 
-        return copia.filter(proyecto =>
-            proyecto.titulo.toLowerCase().includes(texto.toLowerCase())
-        );
-    };
+    proyecto.length = 0;
 
-    // Eliminar proyecto
-    const eliminarProyecto = (id) => {
+    proyecto.push(...nuevaLista);
+  };
 
-        const copia = [...proyecto];
-
-        const nuevaLista = copia.filter(
-            proyecto => proyecto.id !== id
-        );
-
-        proyecto.length = 0;
-
-        proyecto.push(...nuevaLista);
-    };
-
-    return {
-        listarProyectos,
-        buscarProyecto,
-        agregarProyecto,
-        eliminarProyecto
-    };
-
+  return {
+    listarProyectos,
+    buscarProyecto,
+    agregarProyecto,
+    eliminarProyecto,
+  };
 })();
 
 export default proyectoService;

@@ -77,10 +77,24 @@ nav a:hover {
   border: none;
   cursor: pointer;
 }
-
 .boton-accion:hover {
-  background-color: #c94c4c;
+  background-color: #05434f;
 }
+.boton-Eliminar {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #ff4c4c;
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.boton-Eliminar:hover {
+  background-color: #d10000;
+}
+
 .seccion-buscador {
   text-align: center;
   margin: 20px auto;
