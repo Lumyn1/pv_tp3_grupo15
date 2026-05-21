@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../css/App.css";
 import proyectoService from "../services/proyectoService";
 import ProyectoCard from "./ProyectoCard";
+import ProyectoDetalle from "./ProyectoDetalle"; 
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState(proyectoService.listarProyectos());
@@ -10,7 +11,14 @@ const Proyectos = () => {
   const [formulario, setFormulario] = useState({
     titulo: "",
     categoria: "",
+    descripcion: "",
+    descripcion2: "",
+    pdf: "",
+    repositorio: "",
+    drive: "",
+    miembros: "",
   });
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   const { titulo, categoria } = formulario;
 
   const manejarEliminar = (id) => {
@@ -51,13 +59,22 @@ const Proyectos = () => {
       categoria,
 
       estado: true,
+      descripcion: formulario.descripcion,
+      descripcion2: formulario.descripcion2,
+      recursos: {
+        pdf: formulario.pdf,
+        repositorio: formulario.repositorio,
+        drive: formulario.drive,
+      },
+      
+      miembros: formulario.miembros.split(",").map((m) => m.trim()),
     };
 
     proyectoService.agregarProyecto(nuevoProyecto);
 
     setProyectos(proyectoService.listarProyectos());
 
-    setFormulario({ titulo: "", categoria: "" });
+    setFormulario({ titulo: "", categoria: "", descripcion: "", descripcion2: "", pdf: "", repositorio: "", drive: "", miembros: "" });
   };
 
   return (
@@ -81,6 +98,54 @@ const Proyectos = () => {
               name="categoria"
               placeholder="Categoría (ej. Web, Data)..."
               value={categoria}
+              onChange={menejarCambio}
+              className="input-formulario"
+            />
+            <input
+              type="text"
+              name="descripcion"
+              placeholder="Descripción del proyecto..."
+              value={formulario.descripcion}
+              onChange={menejarCambio}
+              className="input-formulario"
+            />
+            <input
+              type="text"
+              name="descripcion2"
+              placeholder="Descripción adicional..."
+              value={formulario.descripcion2}
+              onChange={menejarCambio}
+              className="input-formulario"
+            />
+            <input
+              type="text"
+              name="pdf"
+              placeholder="Enlace al PDF..."
+              value={formulario.pdf}
+              onChange={menejarCambio}
+              className="input-formulario"
+            />
+            <input
+              type="text"
+              name="repositorio"
+              placeholder="Enlace al repositorio..."
+              value={formulario.repositorio}
+              onChange={menejarCambio}
+              className="input-formulario"
+            />
+            <input
+              type="text"
+              name="drive"
+              placeholder="Enlace al Drive..."
+              value={formulario.drive}
+              onChange={menejarCambio}
+              className="input-formulario"
+            />
+            <input
+              type="text"
+              name="miembros"
+              placeholder="Miembros del equipo separados por coma..."
+              value={formulario.miembros}
               onChange={menejarCambio}
               className="input-formulario"
             />
@@ -108,9 +173,13 @@ const Proyectos = () => {
             key={proyecto.id}
             proyecto={proyecto}
             manejarEliminar={manejarEliminar}
+            manejarVerDetalle={() => setProyectoSeleccionado(proyecto)}   
           />
         ))}
       </section>
+      {proyectoSeleccionado && (
+        <ProyectoDetalle proyecto={proyectoSeleccionado} />
+      )}
     </div>
   );
 };

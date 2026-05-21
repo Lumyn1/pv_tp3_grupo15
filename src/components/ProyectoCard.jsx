@@ -1,4 +1,4 @@
-const ProyectoCard = ({ proyecto, manejarEliminar }) => {
+const ProyectoCard = ({ proyecto, manejarEliminar, manejarVerDetalle }) => {
   const { titulo, categoria, estado, id } = proyecto;
 
   return (
@@ -10,7 +10,10 @@ const ProyectoCard = ({ proyecto, manejarEliminar }) => {
       <p>Estado: {estado ? "Activo" : "Inactivo"}</p>
 
       <div>
-        <button className="boton-accion">Ver detalle</button>
+        <button className="boton-accion"
+        onClick={manejarVerDetalle}>
+          Ver Detalle
+        </button> 
 
         <button className="boton-Eliminar" onClick={() => manejarEliminar(id)}>
           Eliminar
