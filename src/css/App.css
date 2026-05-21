@@ -165,3 +165,50 @@ footer {
   padding: 15px;
   margin-top: 20px;
 }
+
+.detalle-proyecto {
+  background-color: #2b2b2b;   /* mismo fondo que las tarjetas */
+  padding: 25px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 800px;            /* más ancho que las tarjetas */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3); /* sombra para destacar */
+}
+
+.detalle-proyecto h2 {
+  color: #7fbdcc;              /* mismo color que títulos */
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.detalle-proyecto h4 {
+  color: #7fbdcc;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.detalle-proyecto p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #ddd;
+}
+
+.detalle-proyecto ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.detalle-proyecto li {
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.detalle-proyecto a {
+  color: #7fbdcc;
+  text-decoration: none;
+}
+
+.detalle-proyecto a:hover {
+  text-decoration: underline;
+}
