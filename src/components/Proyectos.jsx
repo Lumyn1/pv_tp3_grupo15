@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/App.css";
 import proyectoService from "../services/proyectoService";
 import ProyectoCard from "./ProyectoCard";
-import ProyectoDetalle from "./ProyectoDetalle"; 
+import ProyectoDetalle from "./ProyectoDetalle";
+import RegistroActividad from "./RegistroActividad";
 
 const Proyectos = () => {
-  const [proyectos, setProyectos] = useState(proyectoService.listarProyectos());
+  const [proyectos, setProyectos] = useState(
+    proyectoService.listarProyectos()
+  );
 
   const [textoBusqueda, setTextoBusqueda] = useState("");
+
+  const [ultimaActividad, setUltimaActividad] = useState("");
+
   const [formulario, setFormulario] = useState({
     titulo: "",
     categoria: "",
@@ -18,69 +24,103 @@ const Proyectos = () => {
     drive: "",
     miembros: "",
   });
-  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
-  const { titulo, categoria } = formulario;
 
-  const manejarEliminar = (id) => {
-    proyectoService.eliminarProyecto(id);
+const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
 
-    setProyectos(proyectoService.listarProyectos());
-  };
+const { titulo, categoria } = formulario;
+
+useEffect(() => {
+  console.log("La lista de proyectos fue modificada");
+}, [proyectos]);
+
+const manejarEliminar = (id) => {
+  proyectoService.eliminarProyecto(id);
+
+  setProyectos(proyectoService.listarProyectos());
+
+  setUltimaActividad(
+    `Proyecto eliminado - ${new Date().toLocaleString()}`
+  );
+};
 
   const manejarBusqueda = (evento) => {
     const textoIngresado = evento.target.value;
 
     setTextoBusqueda(textoIngresado);
 
-    const proyectosFiltrados = proyectoService.buscarProyecto(textoIngresado);
+    const proyectosFiltrados =
+      proyectoService.buscarProyecto(textoIngresado);
 
     setProyectos(proyectosFiltrados);
   };
 
   const menejarCambio = (evento) => {
     const { name, value } = evento.target;
-    setFormulario({ ...formulario, [name]: value });
+
+    setFormulario({
+      ...formulario,
+      [name]: value,
+    });
   };
 
   const manejarAgregar = (evento) => {
     evento.preventDefault();
 
     if (titulo.trim() === "" || categoria.trim() === "") {
-      alert("Por favor, completa el título y la categoría del proyecto.");
+      alert(
+        "Por favor, completa el título y la categoría del proyecto."
+      );
 
       return;
     }
 
     const nuevoProyecto = {
       id: Date.now(),
-
       titulo,
-
       categoria,
-
       estado: true,
+
       descripcion: formulario.descripcion,
       descripcion2: formulario.descripcion2,
+
       recursos: {
         pdf: formulario.pdf,
         repositorio: formulario.repositorio,
         drive: formulario.drive,
       },
-      
-      miembros: formulario.miembros.split(",").map((m) => m.trim()),
+
+      miembros: formulario.miembros
+        .split(",")
+        .map((m) => m.trim()),
     };
 
     proyectoService.agregarProyecto(nuevoProyecto);
 
     setProyectos(proyectoService.listarProyectos());
 
-    setFormulario({ titulo: "", categoria: "", descripcion: "", descripcion2: "", pdf: "", repositorio: "", drive: "", miembros: "" });
+    setUltimaActividad(
+      `Proyecto agregado - ${new Date().toLocaleString()}`
+    );
+
+    setFormulario({
+      titulo: "",
+      categoria: "",
+      descripcion: "",
+      descripcion2: "",
+      pdf: "",
+      repositorio: "",
+      drive: "",
+      miembros: "",
+    });
   };
 
   return (
     <div className="contenedor-vista-proyectos">
       <div className="seccion-formulario">
-        <form onSubmit={manejarAgregar} className="formulario-agregar">
+        <form
+          onSubmit={manejarAgregar}
+          className="formulario-agregar"
+        >
           <h3>Agregar Nuevo Proyecto</h3>
 
           <div className="grupo-inputs">
@@ -101,6 +141,7 @@ const Proyectos = () => {
               onChange={menejarCambio}
               className="input-formulario"
             />
+
             <input
               type="text"
               name="descripcion"
@@ -109,6 +150,7 @@ const Proyectos = () => {
               onChange={menejarCambio}
               className="input-formulario"
             />
+
             <input
               type="text"
               name="descripcion2"
@@ -117,6 +159,7 @@ const Proyectos = () => {
               onChange={menejarCambio}
               className="input-formulario"
             />
+
             <input
               type="text"
               name="pdf"
@@ -125,6 +168,7 @@ const Proyectos = () => {
               onChange={menejarCambio}
               className="input-formulario"
             />
+
             <input
               type="text"
               name="repositorio"
@@ -133,6 +177,7 @@ const Proyectos = () => {
               onChange={menejarCambio}
               className="input-formulario"
             />
+
             <input
               type="text"
               name="drive"
@@ -141,16 +186,20 @@ const Proyectos = () => {
               onChange={menejarCambio}
               className="input-formulario"
             />
+
             <input
               type="text"
               name="miembros"
-              placeholder="Miembros del equipo separados por coma..."
+              placeholder="Miembros separados por coma..."
               value={formulario.miembros}
               onChange={menejarCambio}
               className="input-formulario"
             />
 
-            <button type="submit" className="boton-accion">
+            <button
+              type="submit"
+              className="boton-accion"
+            >
               Agregar
             </button>
           </div>
@@ -160,7 +209,7 @@ const Proyectos = () => {
       <div className="seccion-buscador">
         <input
           type="text"
-          placeholder="Buscar proyecto por titulo..."
+          placeholder="Buscar proyecto por título..."
           value={textoBusqueda}
           onChange={manejarBusqueda}
           className="input-buscador"
@@ -173,13 +222,22 @@ const Proyectos = () => {
             key={proyecto.id}
             proyecto={proyecto}
             manejarEliminar={manejarEliminar}
-            manejarVerDetalle={() => setProyectoSeleccionado(proyecto)}   
+            manejarVerDetalle={() =>
+              setProyectoSeleccionado(proyecto)
+            }
           />
         ))}
       </section>
+
       {proyectoSeleccionado && (
-        <ProyectoDetalle proyecto={proyectoSeleccionado} />
+        <ProyectoDetalle
+          proyecto={proyectoSeleccionado}
+        />
       )}
+
+      <RegistroActividad
+        fecha={ultimaActividad}
+      />
     </div>
   );
 };
