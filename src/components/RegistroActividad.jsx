@@ -1,14 +1,16 @@
 const RegistroActividad = ({ fecha }) => {
 
-  const fechaFormateada = new Date(fecha).toLocaleDateString();
+  const fechaConvertida = new Date(fecha);
 
-  const horaFormateada = new Date(fecha).toLocaleTimeString([], {
+  const fechaFormateada = fechaConvertida.toLocaleDateString();
+
+  const horaFormateada = fechaConvertida.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
 
   return (
- <div className="registro-actividad">
+    <div className="registro-actividad">
 
       <h3>Registro de Actividad</h3>
 
@@ -23,6 +25,6 @@ const RegistroActividad = ({ fecha }) => {
 
     </div>
   );
-  };
+};
 
 export default RegistroActividad;
