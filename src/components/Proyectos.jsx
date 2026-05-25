@@ -25,38 +25,38 @@ const Proyectos = () => {
     miembros: "",
   });
 
-const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
 
-const { titulo, categoria } = formulario;
+  const { titulo, categoria } = formulario;
 
-useEffect(() => {
-  console.log("La lista de proyectos fue modificada");
-}, [proyectos]);
+  // IMPLEMENTACIÓN DEL PUNTO 2 
+  useEffect(() => {
+    // Captura la fecha y hora actual del sistema
+    const fechaActual = new Date().toLocaleString();
 
-const manejarEliminar = (id) => {
-  proyectoService.eliminarProyecto(id);
+    // Actualiza el estado de forma asíncrona para evitar advertencias de rendimiento
+    const timer = setTimeout(() => {
+      setUltimaActividad(fechaActual);
+    }, 0);
 
-  setProyectos(proyectoService.listarProyectos());
+    return () => clearTimeout(timer);
+  }, [proyectos]); // Se ejecuta solo cuando la lista de proyectos sufre una modificación
 
-  setUltimaActividad(
-    `Proyecto eliminado - ${new Date().toLocaleString()}`
-  );
-};
+  const manejarEliminar = (id) => {
+    proyectoService.eliminarProyecto(id);
+    setProyectos(proyectoService.listarProyectos());
+  };
 
   const manejarBusqueda = (evento) => {
     const textoIngresado = evento.target.value;
-
     setTextoBusqueda(textoIngresado);
 
-    const proyectosFiltrados =
-      proyectoService.buscarProyecto(textoIngresado);
-
+    const proyectosFiltrados = proyectoService.buscarProyecto(textoIngresado);
     setProyectos(proyectosFiltrados);
   };
 
-  const menejarCambio = (evento) => {
+  const manejarCambio = (evento) => {
     const { name, value } = evento.target;
-
     setFormulario({
       ...formulario,
       [name]: value,
@@ -67,10 +67,7 @@ const manejarEliminar = (id) => {
     evento.preventDefault();
 
     if (titulo.trim() === "" || categoria.trim() === "") {
-      alert(
-        "Por favor, completa el título y la categoría del proyecto."
-      );
-
+      alert("Por favor, completa el título y la categoría del proyecto.");
       return;
     }
 
@@ -79,28 +76,20 @@ const manejarEliminar = (id) => {
       titulo,
       categoria,
       estado: true,
-
       descripcion: formulario.descripcion,
       descripcion2: formulario.descripcion2,
-
       recursos: {
         pdf: formulario.pdf,
         repositorio: formulario.repositorio,
         drive: formulario.drive,
       },
-
       miembros: formulario.miembros
         .split(",")
         .map((m) => m.trim()),
     };
 
     proyectoService.agregarProyecto(nuevoProyecto);
-
     setProyectos(proyectoService.listarProyectos());
-
-    setUltimaActividad(
-      `Proyecto agregado - ${new Date().toLocaleString()}`
-    );
 
     setFormulario({
       titulo: "",
@@ -129,7 +118,7 @@ const manejarEliminar = (id) => {
               name="titulo"
               placeholder="Título del proyecto..."
               value={titulo}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -138,7 +127,7 @@ const manejarEliminar = (id) => {
               name="categoria"
               placeholder="Categoría (ej. Web, Data)..."
               value={categoria}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -147,7 +136,7 @@ const manejarEliminar = (id) => {
               name="descripcion"
               placeholder="Descripción del proyecto..."
               value={formulario.descripcion}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -156,7 +145,7 @@ const manejarEliminar = (id) => {
               name="descripcion2"
               placeholder="Descripción adicional..."
               value={formulario.descripcion2}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -165,7 +154,7 @@ const manejarEliminar = (id) => {
               name="pdf"
               placeholder="Enlace al PDF..."
               value={formulario.pdf}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -174,7 +163,7 @@ const manejarEliminar = (id) => {
               name="repositorio"
               placeholder="Enlace al repositorio..."
               value={formulario.repositorio}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -183,7 +172,7 @@ const manejarEliminar = (id) => {
               name="drive"
               placeholder="Enlace al Drive..."
               value={formulario.drive}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
@@ -192,7 +181,7 @@ const manejarEliminar = (id) => {
               name="miembros"
               placeholder="Miembros separados por coma..."
               value={formulario.miembros}
-              onChange={menejarCambio}
+              onChange={manejarCambio}
               className="input-formulario"
             />
 
