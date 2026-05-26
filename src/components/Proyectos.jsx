@@ -29,18 +29,16 @@ const Proyectos = () => {
 
   const { titulo, categoria } = formulario;
 
-  // IMPLEMENTACIÓN DEL PUNTO 2 
-  useEffect(() => {
-    // Captura la fecha y hora actual del sistema
-    const fechaActual = new Date().toLocaleString();
+  // IMPLEMENTACIÓN DEL PUNTO 2
+useEffect(() => {
 
-    // Actualiza el estado de forma asíncrona para evitar advertencias de rendimiento
-    const timer = setTimeout(() => {
-      setUltimaActividad(fechaActual);
-    }, 0);
+  // Captura la fecha y hora actual del sistema
+  const fechaActual = new Date();
 
-    return () => clearTimeout(timer);
-  }, [proyectos]); // Se ejecuta solo cuando la lista de proyectos sufre una modificación
+  // Guarda la fecha en el estado
+  setUltimaActividad(fechaActual);
+
+}, [proyectos]);
 
   const manejarEliminar = (id) => {
     proyectoService.eliminarProyecto(id);
