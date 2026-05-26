@@ -4,6 +4,8 @@
 
 .Cancino Arturo Luis Eduardo - id de GitHub: EducanXD
 
+.Antenor Maximiliano Leandro Cayeteno -id de GitHub mk07088
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

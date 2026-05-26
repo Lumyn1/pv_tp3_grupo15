@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../css/App.css";
 import proyectoService from "../services/proyectoService";
 import ProyectoCard from "./ProyectoCard";
@@ -6,9 +6,7 @@ import ProyectoDetalle from "./ProyectoDetalle";
 import RegistroActividad from "./RegistroActividad";
 
 const Proyectos = () => {
-  const [proyectos, setProyectos] = useState(
-    proyectoService.listarProyectos()
-  );
+  const [proyectos, setProyectos] = useState(proyectoService.listarProyectos());
 
   const [textoBusqueda, setTextoBusqueda] = useState("");
 
@@ -26,23 +24,29 @@ const Proyectos = () => {
   });
 
   const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+  const primeraVez = useRef(true);
+  const [contadorOperaciones, setContadorOperaciones] = useState(0);
 
   const { titulo, categoria } = formulario;
 
-  // IMPLEMENTACIÓN DEL PUNTO 2
-useEffect(() => {
+  // IMPLEMENTACIÓN DEL PUNTO 2 y punto 4
+  useEffect(() => {
+    if (primeraVez.current === true) {
+      primeraVez.current = false;
+      return;
+    }
 
-  // Captura la fecha y hora actual del sistema
-  const fechaActual = new Date();
+    // Captura la fecha y hora actual del sistema
+    const fechaActual = new Date();
 
-  // Guarda la fecha en el estado
-  setUltimaActividad(fechaActual);
-
-}, [proyectos]);
+    // Guarda la fecha en el estado
+    setUltimaActividad(fechaActual);
+  }, [contadorOperaciones]);
 
   const manejarEliminar = (id) => {
     proyectoService.eliminarProyecto(id);
     setProyectos(proyectoService.listarProyectos());
+    setContadorOperaciones((prev) => prev + 1);
   };
 
   const manejarBusqueda = (evento) => {
@@ -81,9 +85,7 @@ useEffect(() => {
         repositorio: formulario.repositorio,
         drive: formulario.drive,
       },
-      miembros: formulario.miembros
-        .split(",")
-        .map((m) => m.trim()),
+      miembros: formulario.miembros.split(",").map((m) => m.trim()),
     };
 
     proyectoService.agregarProyecto(nuevoProyecto);
@@ -99,15 +101,13 @@ useEffect(() => {
       drive: "",
       miembros: "",
     });
+    setContadorOperaciones((prev) => prev + 1);
   };
 
   return (
     <div className="contenedor-vista-proyectos">
       <div className="seccion-formulario">
-        <form
-          onSubmit={manejarAgregar}
-          className="formulario-agregar"
-        >
+        <form onSubmit={manejarAgregar} className="formulario-agregar">
           <h3>Agregar Nuevo Proyecto</h3>
 
           <div className="grupo-inputs">
@@ -183,10 +183,7 @@ useEffect(() => {
               className="input-formulario"
             />
 
-            <button
-              type="submit"
-              className="boton-accion"
-            >
+            <button type="submit" className="boton-accion">
               Agregar
             </button>
           </div>
@@ -209,22 +206,15 @@ useEffect(() => {
             key={proyecto.id}
             proyecto={proyecto}
             manejarEliminar={manejarEliminar}
-            manejarVerDetalle={() =>
-              setProyectoSeleccionado(proyecto)
-            }
+            manejarVerDetalle={() => setProyectoSeleccionado(proyecto)}
           />
         ))}
       </section>
 
       {proyectoSeleccionado && (
-        <ProyectoDetalle
-          proyecto={proyectoSeleccionado}
-        />
+        <ProyectoDetalle proyecto={proyectoSeleccionado} />
       )}
-
-      <RegistroActividad
-        fecha={ultimaActividad}
-      />
+      {ultimaActividad && <RegistroActividad fecha={ultimaActividad} />}
     </div>
   );
 };
