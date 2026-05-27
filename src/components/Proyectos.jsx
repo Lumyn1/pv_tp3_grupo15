@@ -4,6 +4,7 @@ import proyectoService from "../services/proyectoService";
 import ProyectoCard from "./ProyectoCard";
 import ProyectoDetalle from "./ProyectoDetalle";
 import RegistroActividad from "./RegistroActividad";
+import FormularioProyecto from "./FormularioProyecto"; 
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState(proyectoService.listarProyectos());
@@ -12,22 +13,22 @@ const Proyectos = () => {
 
   const [ultimaActividad, setUltimaActividad] = useState("");
 
-  const [formulario, setFormulario] = useState({
-    titulo: "",
-    categoria: "",
-    descripcion: "",
-    descripcion2: "",
-    pdf: "",
-    repositorio: "",
-    drive: "",
-    miembros: "",
-  });
+  // const [formulario, setFormulario] = useState({
+  //   titulo: "",
+  //   categoria: "",
+  //   descripcion: "",
+  //   descripcion2: "",
+  //   pdf: "",
+  //   repositorio: "",
+  //   drive: "",
+  //   miembros: "",
+  // });
 
   const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   const primeraVez = useRef(true);
   const [contadorOperaciones, setContadorOperaciones] = useState(0);
 
-  const { titulo, categoria } = formulario;
+  // const { titulo, categoria } = formulario;
 
   // IMPLEMENTACIÓN DEL PUNTO 2 y punto 4
   useEffect(() => {
@@ -57,57 +58,62 @@ const Proyectos = () => {
     setProyectos(proyectosFiltrados);
   };
 
-  const manejarCambio = (evento) => {
-    const { name, value } = evento.target;
-    setFormulario({
-      ...formulario,
-      [name]: value,
-    });
-  };
-
-  const manejarAgregar = (evento) => {
-    evento.preventDefault();
-
-    if (titulo.trim() === "" || categoria.trim() === "") {
-      alert("Por favor, completa el título y la categoría del proyecto.");
-      return;
-    }
-
-    const nuevoProyecto = {
-      id: Date.now(),
-      titulo,
-      categoria,
-      estado: true,
-      descripcion: formulario.descripcion,
-      descripcion2: formulario.descripcion2,
-      recursos: {
-        pdf: formulario.pdf,
-        repositorio: formulario.repositorio,
-        drive: formulario.drive,
-      },
-      miembros: formulario.miembros.split(",").map((m) => m.trim()),
-    };
-
+  // const manejarCambio = (evento) => {
+  //   const { name, value } = evento.target;
+  //   setFormulario({
+  //     ...formulario,
+  //     [name]: value,
+  //   });
+  // };
+const manejarAgregar = (nuevoProyecto) => {
     proyectoService.agregarProyecto(nuevoProyecto);
     setProyectos(proyectoService.listarProyectos());
-
-    setFormulario({
-      titulo: "",
-      categoria: "",
-      descripcion: "",
-      descripcion2: "",
-      pdf: "",
-      repositorio: "",
-      drive: "",
-      miembros: "",
-    });
     setContadorOperaciones((prev) => prev + 1);
-  };
+  }; 
+  // const manejarAgregar = (evento) => {
+  //   evento.preventDefault();
+
+  //   if (titulo.trim() === "" || categoria.trim() === "") {
+  //     alert("Por favor, completa el título y la categoría del proyecto.");
+  //     return;
+  //   }
+
+  //   const nuevoProyecto = {
+  //     id: Date.now(),
+  //     titulo,
+  //     categoria,
+  //     estado: true,
+  //     descripcion: formulario.descripcion,
+  //     descripcion2: formulario.descripcion2,
+  //     recursos: {
+  //       pdf: formulario.pdf,
+  //       repositorio: formulario.repositorio,
+  //       drive: formulario.drive,
+  //     },
+  //     miembros: formulario.miembros.split(",").map((m) => m.trim()),
+  //   };
+
+  //   proyectoService.agregarProyecto(nuevoProyecto);
+  //   setProyectos(proyectoService.listarProyectos());
+
+  //   setFormulario({
+  //     titulo: "",
+  //     categoria: "",
+  //     descripcion: "",
+  //     descripcion2: "",
+  //     pdf: "",
+  //     repositorio: "",
+  //     drive: "",
+  //     miembros: "",
+  //   });
+  //   setContadorOperaciones((prev) => prev + 1);
+  // };
 
   return (
     <div className="contenedor-vista-proyectos">
       <div className="seccion-formulario">
-        <form onSubmit={manejarAgregar} className="formulario-agregar">
+        <FormularioProyecto onAgregarProyecto={manejarAgregar} /> 
+         {/* <form onSubmit={manejarAgregar} className="formulario-agregar">
           <h3>Agregar Nuevo Proyecto</h3>
 
           <div className="grupo-inputs">
@@ -187,7 +193,7 @@ const Proyectos = () => {
               Agregar
             </button>
           </div>
-        </form>
+        </form> */}
       </div>
 
       <div className="seccion-buscador">
