@@ -6,6 +6,8 @@
 
 .Antenor Maximiliano Leandro Cayeteno -id de GitHub mk07088
 
+.Sanchez Esteban Jesus - id de github: Esteban3748
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
