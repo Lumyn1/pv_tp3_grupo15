@@ -1,0 +1,12 @@
+.perfil-paper {
+  background-color: #0b4f5c !important;
+  color: white !important;
+  padding: 24px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.perfil-titulo {
+  margin-bottom: 20px;
+  color: white;
+}
