@@ -18,40 +18,34 @@ const proyectoService = (() => {
     },
   ];
 
-  // Obtener copia del arreglo
+  // Obtener solo proyectos activos
   const listarProyectos = () => {
-    return [...proyecto];
+    return proyecto.filter((proyecto) => proyecto.estado);
   };
 
   // Agregar proyecto
   const agregarProyecto = (nuevoProyecto) => {
-    const copia = [...proyecto];
-
-    copia.push(nuevoProyecto);
-
-    proyecto.length = 0;
-
-    proyecto.push(...copia);
+    proyecto.push(nuevoProyecto);
   };
 
-  // Buscar proyecto
+  // Buscar proyecto entre los activos
   const buscarProyecto = (texto) => {
-    const copia = [...proyecto];
-
-    return copia.filter((proyecto) =>
-      proyecto.titulo.toLowerCase().includes(texto.toLowerCase()),
+    return proyecto.filter(
+      (proyecto) =>
+        proyecto.estado &&
+        proyecto.titulo.toLowerCase().includes(texto.toLowerCase())
     );
   };
 
-  // Eliminar proyecto
+  // Eliminar proyecto (cambiar estado a false)
   const eliminarProyecto = (id) => {
-    const copia = [...proyecto];
+    const proyectoEncontrado = proyecto.find(
+      (proyecto) => proyecto.id === id
+    );
 
-    const nuevaLista = copia.filter((proyecto) => proyecto.id !== id);
-
-    proyecto.length = 0;
-
-    proyecto.push(...nuevaLista);
+    if (proyectoEncontrado) {
+      proyectoEncontrado.estado = false;
+    }
   };
 
   return {
