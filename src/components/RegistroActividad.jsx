@@ -1,3 +1,5 @@
+import { Snackbar, Alert } from "@mui/material";
+
 const RegistroActividad = ({ fecha }) => {
   const fechaConvertida = new Date(fecha);
 
@@ -13,16 +15,17 @@ const RegistroActividad = ({ fecha }) => {
     hour12: false,
   });
 
-  return (
-    <div className="registro-actividad">
-      <h3>Registro de Actividad</h3>
+  const mensajeTexto = `Última actualización de la lista: ${fechaFormateada} a las ${horaFormateada} hs.`;
 
-      <p>
-        Última actualización de la lista: {fechaFormateada} a las{" "}
-        {horaFormateada}
-        hs.
-      </p>
-    </div>
+  return (
+    <Snackbar
+      open={Boolean(fecha)}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+    >
+      <Alert severity="info" variant="filled" sx={{ width: "100%" }}>
+        {mensajeTexto}
+      </Alert>
+    </Snackbar>
   );
 };
 

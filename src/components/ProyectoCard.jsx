@@ -1,25 +1,37 @@
+import { Card, CardContent, CardActions, Typography, Button } from "@mui/material";
+
 const ProyectoCard = ({ proyecto, manejarEliminar, manejarVerDetalle }) => {
   const { titulo, categoria, estado, id } = proyecto;
 
   return (
-    <article className="tarjeta">
-      <h3>{titulo}</h3>
 
-      <p>Categoría: {categoria}</p>
+    <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography variant="h5" component="div" gutterBottom>
+          {titulo}
+        </Typography>
 
-      <p>Estado: {estado ? "Activo" : "Inactivo"}</p>
+        <Typography variant="body1" color="text.secondary">
+          Categoría: {categoria}
+        </Typography>
 
-      <div>
-        <button className="boton-accion"
-        onClick={manejarVerDetalle}>
+        <Typography variant="body2" color={estado ? "success.main" : "error.main"} sx={{ mt: 1, fontWeight: 'bold' }}>
+          Estado: {estado ? "Activo" : "Inactivo"}
+        </Typography>
+      </CardContent>
+
+      <CardActions>
+        <Button size="small" variant="contained" color="primary" onClick={manejarVerDetalle}>
           Ver Detalle
-        </button> 
+        </Button> 
 
-        <button className="boton-Eliminar" onClick={() => manejarEliminar(id)}>
+        <Button size="small" variant="outlined" color="error" onClick={() => manejarEliminar(id)}>
           Eliminar
-        </button>
-      </div>
-    </article>
+        </Button>
+      </CardActions>
+
+    </Card>
   );
 };
 
