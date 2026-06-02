@@ -2,7 +2,7 @@ const proyectoService = (() => {
   // Arreglo privado de proyectos
   const proyecto = [
     { id: 1, titulo: "Sistema de Gestión", categoria: "Web", estado: true },
-    { id: 2, titulo: "App Móvil Delivery", categoria: "Mobile", estado: false },
+    { id: 2, titulo: "App Móvil Delivery", categoria: "Mobile", estado: true },
     { id: 3, titulo: "E-commerce Ropa", categoria: "Web", estado: true },
     {
       id: 4,
