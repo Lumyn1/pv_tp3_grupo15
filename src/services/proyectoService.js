@@ -47,12 +47,16 @@ const proyectoService = (() => {
       proyectoEncontrado.estado = false;
     }
   };
-
+// Obtener proyecto por ID
+const getById = (id) => {
+  return proyecto.find((p) => p.id === Number(id)); 
+}
   return {
     listarProyectos,
     buscarProyecto,
     agregarProyecto,
     eliminarProyecto,
+    getById,  
   };
 })();
 

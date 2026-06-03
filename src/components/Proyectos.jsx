@@ -7,12 +7,13 @@ import RegistroActividad from "./RegistroActividad";
 import FormularioProyecto from "./FormularioProyecto"; 
 
 import { Container, Grid, TextField, Box } from "@mui/material";
+import { Link } from "react-router-dom"; 
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState(proyectoService.listarProyectos());
   const [textoBusqueda, setTextoBusqueda] = useState("");
   const [ultimaActividad, setUltimaActividad] = useState("");
-  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+  // const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   const primeraVez = useRef(true);
   const [contadorOperaciones, setContadorOperaciones] = useState(0);
 
@@ -80,19 +81,17 @@ const Proyectos = () => {
         >
           {proyectos.map((proyecto) => (
             <Grid item xs={12} sm={6} md={4} key={proyecto.id}>
-              <ProyectoCard
-                proyecto={proyecto}
-                manejarEliminar={manejarEliminar}
-                manejarVerDetalle={() => setProyectoSeleccionado(proyecto)}
-              />
+              <ProyectoCard proyecto={proyecto} manejarEliminar={manejarEliminar}>
+                <Link to={`/proyectos/${proyecto.id}`}>Ver Detalles</Link>
+              </ProyectoCard>
             </Grid>
           ))}
         </Grid>
       </Box>
 
-      {proyectoSeleccionado && (
+      {/* {proyectoSeleccionado && (
         <ProyectoDetalle proyecto={proyectoSeleccionado} />
-      )}
+      )} */}
       
       {ultimaActividad && <RegistroActividad fecha={ultimaActividad} />}
       
