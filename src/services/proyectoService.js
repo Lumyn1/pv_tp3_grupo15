@@ -42,7 +42,6 @@ const proyectoService = (() => {
     }
   };
 
-  // --- LA FUNCIÓN NUEVA DE TU COMPAÑERO ---
   const getById = (id) => {
     return proyecto.find((p) => p.id === Number(id)); 
   }
