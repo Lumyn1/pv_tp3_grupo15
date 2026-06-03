@@ -2,18 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import "../css/App.css"; 
 import proyectoService from "../services/proyectoService";
 import ProyectoCard from "./ProyectoCard";
-import ProyectoDetalle from "./ProyectoDetalle";
 import RegistroActividad from "./RegistroActividad";
 import FormularioProyecto from "./FormularioProyecto"; 
 
 import { Container, Grid, TextField, Box } from "@mui/material";
-import { Link } from "react-router-dom"; 
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState(proyectoService.listarProyectos());
   const [textoBusqueda, setTextoBusqueda] = useState("");
   const [ultimaActividad, setUltimaActividad] = useState("");
-  // const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   const primeraVez = useRef(true);
   const [contadorOperaciones, setContadorOperaciones] = useState(0);
 
@@ -28,7 +25,8 @@ const Proyectos = () => {
 
   const manejarEliminar = (id) => {
     proyectoService.eliminarProyecto(id);
-    setProyectos(proyectoService.listarProyectos());
+    // Usamos el clonado de arreglo para forzar a React a actualizar la pantalla
+    setProyectos([...proyectoService.listarProyectos()]);
     setContadorOperaciones((prev) => prev + 1);
   };
 
@@ -41,7 +39,7 @@ const Proyectos = () => {
 
   const manejarAgregar = (nuevoProyecto) => {
     proyectoService.agregarProyecto(nuevoProyecto);
-    setProyectos(proyectoService.listarProyectos());
+    setProyectos([...proyectoService.listarProyectos()]);
     setContadorOperaciones((prev) => prev + 1);
   }; 
 
@@ -71,7 +69,6 @@ const Proyectos = () => {
         />
       </Box>
 
-
       <Box sx={{ width: '100%', maxWidth: '900px', display: 'flex', justifyContent: 'center' }}>
         <Grid 
           container 
@@ -81,17 +78,14 @@ const Proyectos = () => {
         >
           {proyectos.map((proyecto) => (
             <Grid item xs={12} sm={6} md={4} key={proyecto.id}>
-              <ProyectoCard proyecto={proyecto} manejarEliminar={manejarEliminar}>
-                <Link to={`/proyectos/${proyecto.id}`}>Ver Detalles</Link>
-              </ProyectoCard>
+              <ProyectoCard 
+                proyecto={proyecto} 
+                manejarEliminar={manejarEliminar} 
+              />
             </Grid>
           ))}
         </Grid>
       </Box>
-
-      {/* {proyectoSeleccionado && (
-        <ProyectoDetalle proyecto={proyectoSeleccionado} />
-      )} */}
       
       {ultimaActividad && <RegistroActividad fecha={ultimaActividad} />}
       
