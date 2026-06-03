@@ -1,6 +1,7 @@
 import { Card, CardContent, CardActions, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";  
 
-const ProyectoCard = ({ proyecto, manejarEliminar, manejarVerDetalle }) => {
+const ProyectoCard = ({ proyecto, manejarEliminar }) => {
   const { titulo, categoria, estado, id } = proyecto;
 
   return (
@@ -22,9 +23,11 @@ const ProyectoCard = ({ proyecto, manejarEliminar, manejarVerDetalle }) => {
       </CardContent>
 
       <CardActions>
-        <Button size="small" variant="contained" color="primary" onClick={manejarVerDetalle}>
-          Ver Detalle
-        </Button> 
+        <Link to={`/proyectos/${id}`}>
+          <Button size="small" variant="contained" color="primary">
+            Ver Detalle
+          </Button>
+        </Link>
 
         <Button size="small" variant="outlined" color="error" onClick={() => manejarEliminar(id)}>
           Eliminar

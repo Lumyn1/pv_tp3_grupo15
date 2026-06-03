@@ -1,4 +1,16 @@
-const ProyectoDetalle = ({ proyecto }) => {
+import {useParams} from "react-router-dom";
+import proyectoService from "../services/proyectoService";
+
+const ProyectoDetalle = () => {
+  const { id } = useParams();
+  const proyecto = proyectoService.getById(id); 
+  console.log("ID desde URL:", id);
+  console.log("Proyecto obtenido:", proyecto);  
+
+  if (!proyecto) {
+    return <div>Proyecto no encontrado</div>;
+  }
+
   return (
     <div className="detalle-proyecto">
       <h2>{proyecto.titulo}</h2>

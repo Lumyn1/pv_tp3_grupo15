@@ -44,6 +44,7 @@ const FormularioProyecto = ({ onAgregarProyecto }) => {
       },
       miembros: formulario.miembros.split(",").map((m) => m.trim()),
     };
+    console.log("Nuevo proyecto a agregar:", nuevoProyecto);
 
     onAgregarProyecto(nuevoProyecto);
 

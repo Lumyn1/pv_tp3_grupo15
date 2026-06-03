@@ -5,6 +5,7 @@ import Proyectos from "./components/Proyectos";
 import Footer from "./components/Footer";
 import Dashboard from "./views/Dashboard";
 import PerfilUsuario from "./views/PerfilUsuario";
+import ProyectoDetalle from "./components/ProyectoDetalle";
 import "./css/App.css";
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/proyectos/" element={<Proyectos />} />
-        <Route path="/proyectos/:id" element={<h2>Detalles del Proyecto</h2>} />
+        <Route path="/proyectos/:id" element={<ProyectoDetalle />} /> 
         <Route path="/perfil" element={<PerfilUsuario />} />
       </Routes>
 
