@@ -6,10 +6,12 @@ import Footer from "./components/Footer";
 import Dashboard from "./views/Dashboard";
 import PerfilUsuario from "./views/PerfilUsuario";
 import ProyectoDetalle from "./components/ProyectoDetalle";
+import { UsuarioProvider } from "./context/UsuarioContext";
 import "./css/App.css";
 
 const App = () => {
   return (
+   <UsuarioProvider>
     <BrowserRouter>
       <Header />
       <Nav />
@@ -25,6 +27,7 @@ const App = () => {
 
       <Footer />
     </BrowserRouter>
+   </UsuarioProvider>
   );
 };
 
