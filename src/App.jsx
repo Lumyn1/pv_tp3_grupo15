@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { UsuarioProvider } from "./context/UsuarioContext";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
 import Proyectos from "./components/Proyectos";
@@ -6,7 +7,6 @@ import Footer from "./components/Footer";
 import Dashboard from "./views/Dashboard";
 import PerfilUsuario from "./views/PerfilUsuario";
 import ProyectoDetalle from "./components/ProyectoDetalle";
-import { UsuarioProvider } from "./context/UsuarioContext";
 import "./css/App.css";
 
 const App = () => {
