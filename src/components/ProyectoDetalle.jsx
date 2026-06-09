@@ -5,7 +5,7 @@ const ProyectoDetalle = () => {
   const { id } = useParams();
   const proyecto = proyectoService.getById(id); 
   console.log("ID desde URL:", id);
-  console.log("Proyecto obtenido:", proyecto);  
+
 
   if (!proyecto) {
     return <div>Proyecto no encontrado</div>;
