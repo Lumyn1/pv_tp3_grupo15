@@ -1,10 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const UsuarioContext = createContext(null);
 
 export const UsuarioProvider = ({ children }) => {
-  const [usuario, setUsuario] = useState({
+  const usuarioGuardado = localStorage.getItem("usuario");
+  const [usuario, setUsuario] = useState(
+    usuarioGuardado
+      ? JSON.parse(usuarioGuardado)
+      : {
     nombre: "Juan Pérez",
     dni: "12345678",
     rol: "Alumno",
@@ -14,6 +18,10 @@ export const UsuarioProvider = ({ children }) => {
   const actualizarPerfil = (nuevoUsuario) => {
     setUsuario(nuevoUsuario);
   };
+  
+  useEffect(() => {
+    localStorage.setItem("usuario", JSON.stringify(usuario));
+  }, [usuario]);  
 
   return (
     <UsuarioContext.Provider
